@@ -1,0 +1,400 @@
+[
+  {
+    "id": "apt_first_visit",
+    "category": "Appointments & Scheduling",
+    "question": "How do I book an initial physiotherapy appointment?",
+    "alt_questions": [
+      "Can I schedule my first consultation online?",
+      "How do I make an appointment as a new patient?",
+      "What is the procedure for booking a physio session?",
+      "I want to book an appointment with a physiotherapist",
+      "How can I set up an appointment for physical therapy?",
+      "Where do I register for a new patient visit?",
+      "Can I book a consultation today?",
+      "How do I get started with physical therapy?",
+      "Booking an initial evaluation"
+    ],
+    "answer": "You can book your initial consultation online 24/7 through our booking portal at clinic.com/book or by calling our reception at (555) 019-2834. Initial visits are 60 minutes and include a comprehensive assessment, diagnosis, and personalized treatment plan.",
+    "answers": [
+      "You can book your initial consultation online 24/7 through our booking portal at clinic.com/book or by calling our reception at (555) 019-2834. Initial visits are 60 minutes and include a comprehensive assessment, diagnosis, and personalized treatment plan.",
+      "We'd love to help you get started! You can easily schedule your first appointment online anytime at clinic.com/book, or give our front desk a quick call at (555) 019-2834 during business hours. We'll set aside a full 60 minutes with one of our licensed physiotherapists to evaluate your condition and start treatment.",
+      "Booking your first visit is quick and easy:\n• Online: Visit clinic.com/book (available 24/7)\n• Phone: Call us at (555) 019-2834\n• Session length: 60 minutes\n• What's included: Full clinical examination, movement screening, diagnosis, and your customized recovery plan."
+    ]
+  },
+  {
+    "id": "apt_cancellation",
+    "category": "Appointments & Scheduling",
+    "question": "What is your cancellation and rescheduling policy?",
+    "alt_questions": [
+      "Can I reschedule or cancel my appointment?",
+      "Is there a cancellation fee for missed visits?",
+      "How much notice do I need to give to cancel my session?",
+      "What happens if I miss my physiotherapy appointment?",
+      "What is the fee if I have to reschedule or cancel?",
+      "Can I change my appointment time without a penalty?",
+      "How do I cancel my physical therapy appointment?",
+      "Cancellation policy fee"
+    ],
+    "answer": "We require at least 24 hours notice for cancellations or rescheduling. Cancellations with less than 24 hours notice or missed appointments may be subject to a $50 fee, as that time slot was reserved specifically for you.",
+    "answers": [
+      "We require at least 24 hours notice for cancellations or rescheduling. Cancellations with less than 24 hours notice or missed appointments may be subject to a $50 fee, as that time slot was reserved specifically for you.",
+      "We understand that life happens! If you need to cancel or change your appointment time, please let us know at least 24 hours in advance so we can offer that slot to another patient in need. Late cancellations or no-shows with less than 24 hours notice are subject to a $50 fee.",
+      "Our cancellation guidelines are:\n• Notice required: Minimum 24 hours prior to appointment\n• Fee for late cancellations / no-shows: $50\n• How to cancel: Manage via our online portal or call (555) 019-2834 directly."
+    ]
+  },
+  {
+    "id": "apt_telehealth",
+    "category": "Appointments & Scheduling",
+    "question": "Do you offer virtual or telehealth physiotherapy sessions?",
+    "alt_questions": [
+      "Can I do physical therapy online from home?",
+      "Are video consultations available?",
+      "How does telehealth physiotherapy work?",
+      "Can a physiotherapist evaluate me over Zoom or video call?",
+      "Do you provide virtual PT appointments?",
+      "Is online physical therapy effective?",
+      "Can I consult a physio remotely from my computer?"
+    ],
+    "answer": "Yes, we provide secure virtual telehealth consultations. These are ideal for follow-up exercise progression, posture and ergonomic reviews, pain management guidance, and remote injury assessments.",
+    "answers": [
+      "Yes, we provide secure virtual telehealth consultations. These are ideal for follow-up exercise progression, posture and ergonomic reviews, pain management guidance, and remote injury assessments.",
+      "Absolutely! We offer secure, HIPAA-compliant video consultations so you can receive expert guidance from the comfort of your home. It's great for ergonomic evaluations, guided exercise rehabilitation, and progress check-ins.",
+      "Yes, virtual care is available:\n• Platform: Secure video link emailed before your appointment\n• Ideal for: Ergonomic workstation reviews, therapeutic exercise progression, and recovery check-ins\n• Coverage: Most private insurance providers cover virtual physiotherapy identical to in-clinic visits."
+    ]
+  },
+  {
+    "id": "proc_walk_in",
+    "category": "Appointments & Scheduling",
+    "question": "Do you accept walk-ins or same-day appointments?",
+    "alt_questions": [
+      "Can I just walk in without an appointment?",
+      "Do you take walk-in patients for physiotherapy?",
+      "Are same-day physiotherapy bookings available?",
+      "Can I see a physiotherapist today urgently without booking ahead?",
+      "Do you have emergency same-day slots?"
+    ],
+    "answer": "While we operate primarily by appointment to guarantee one-on-one dedicated care, we frequently have same-day cancellations or emergency openings. We strongly encourage calling us at (555) 019-2834 before walking in so we can reserve an available slot for you.",
+    "answers": [
+      "While we operate primarily by appointment to guarantee one-on-one dedicated care, we frequently have same-day cancellations or emergency openings. We strongly encourage calling us at (555) 019-2834 before walking in so we can reserve an available slot for you.",
+      "We recommend booking in advance, but we always do our best to accommodate urgent same-day needs! Give our reception a quick call at (555) 019-2834 to check today's openings before coming in.",
+      "Same-day policy:\n• Primary mode: Scheduled appointments to ensure 1-on-1 therapist focus\n• Same-day availability: Subject to schedule openings and cancellations\n• Recommendation: Call (555) 019-2834 prior to arrival to confirm current therapist availability."
+    ]
+  },
+  {
+    "id": "prep_clothing",
+    "category": "First Visit & Preparation",
+    "question": "What should I wear to my physiotherapy appointment?",
+    "alt_questions": [
+      "What clothes should I wear for physical therapy?",
+      "How should I dress for my treatment session?",
+      "Do I need to wear athletic clothing or gym gear?",
+      "What should I wear for a shoulder or back treatment?",
+      "Should I bring shorts or running shoes to physio?",
+      "What is the recommended attire for physiotherapy?"
+    ],
+    "answer": "Please wear comfortable, loose-fitting clothing that allows easy movement and direct access to the area being treated (e.g. shorts for knees or hips, tank tops or loose shirts for shoulders or neck). Clean running shoes or sneakers are recommended.",
+    "answers": [
+      "Please wear comfortable, loose-fitting clothing that allows easy movement and direct access to the area being treated (e.g. shorts for knees or hips, tank tops or loose shirts for shoulders or neck). Clean running shoes or sneakers are recommended.",
+      "We recommend comfortable workout or athletic attire. For lower-body injuries (knee, ankle, hip), shorts are best. For upper-body or neck injuries, a tank top or loose-fitting t-shirt is ideal. Don't forget supportive sneakers if we are doing movement or balance exercises!",
+      "Attire checklist for your visit:\n• Lower body / spine: Athletic shorts or flexible sweatpants\n• Upper body / neck: Tank top or loose short-sleeved t-shirt\n• Footwear: Clean running shoes or supportive sneakers\n• Note: We also have private changing rooms if you are coming straight from work."
+    ]
+  },
+  {
+    "id": "prep_documents",
+    "category": "First Visit & Preparation",
+    "question": "What documents should I bring to my first appointment?",
+    "alt_questions": [
+      "What do I need to bring for my initial consultation?",
+      "Should I bring my doctor's referral and X-ray or MRI reports?",
+      "What paperwork is required on day one?",
+      "Do I need to bring my ID and insurance card?",
+      "What medical records should I bring to physical therapy?",
+      "Checklist of items to bring to my first physiotherapy visit"
+    ],
+    "answer": "Please bring a valid photo ID, your health insurance card, a doctor's referral or prescription if you have one, and copies of any relevant medical imaging reports (such as X-rays, MRI, or CT scans).",
+    "answers": [
+      "Please bring a valid photo ID, your health insurance card, a doctor's referral or prescription if you have one, and copies of any relevant medical imaging reports (such as X-rays, MRI, or CT scans).",
+      "For your first visit, please bring along a government-issued photo ID, your insurance card, and any medical imaging (X-rays, MRI reports, or operative notes) related to your injury. If your physician gave you a referral or prescription, bring that too!",
+      "Documents to bring:\n• Identification: Government photo ID (driver's license or passport)\n• Insurance: Extended health benefits card\n• Medical history: Relevant X-ray, MRI, or ultrasound reports\n• Physician referral: Doctor's prescription (if required by your insurer)."
+    ]
+  },
+  {
+    "id": "ins_coverage",
+    "category": "Billing & Insurance",
+    "question": "Do you accept insurance and offer direct billing?",
+    "alt_questions": [
+      "Does private health insurance cover physiotherapy?",
+      "Can you bill my insurance company directly?",
+      "Which insurance plans do you accept?",
+      "Do you direct bill to Sun Life, Manulife, or Blue Cross?",
+      "Is physical therapy covered by my workplace benefits?",
+      "Can you submit insurance claims on my behalf?",
+      "Insurance coverage and direct billing providers"
+    ],
+    "answer": "Yes! Most private extended health insurance plans cover physiotherapy. We provide direct billing to major insurance carriers including Blue Cross, Sun Life, Manulife, Great-West Life, and Worker's Compensation (WSIB/WCB). Please check your policy for specific coverage details.",
+    "answers": [
+      "Yes! Most private extended health insurance plans cover physiotherapy. We provide direct billing to major insurance carriers including Blue Cross, Sun Life, Manulife, Great-West Life, and Worker's Compensation (WSIB/WCB). Please check your policy for specific coverage details.",
+      "Yes, we offer convenient direct billing! Most workplace and private health plans cover physiotherapy services. We can submit claims directly to Blue Cross, Sun Life, Manulife, Canada Life, and many other providers so you only pay your co-pay or deductible if applicable.",
+      "Insurance & Direct Billing Details:\n• Supported providers: Blue Cross, Sun Life, Manulife, Great-West/Canada Life, WSIB/WCB, and MVA claims\n• Direct billing: We bill insurers directly at the time of your visit\n• Out-of-pocket: You only cover any remaining co-insurance or deductible amount."
+    ]
+  },
+  {
+    "id": "ins_doctor_referral",
+    "category": "Billing & Insurance",
+    "question": "Do I need a doctor's referral to see a physiotherapist?",
+    "alt_questions": [
+      "Is a medical prescription needed for physical therapy?",
+      "Can I book a physio appointment without seeing my doctor first?",
+      "Does insurance require a physician referral?",
+      "Do I need a prescription from my physician?",
+      "Can I see a physical therapist directly without a doctor note?",
+      "Is a referral required by law to see a physiotherapist?"
+    ],
+    "answer": "No referral is needed to see our physiotherapists—you can book directly. However, some private insurance plans may require a physician's referral for reimbursement, so we advise checking your insurance policy requirements beforehand.",
+    "answers": [
+      "No referral is needed to see our physiotherapists—you can book directly. However, some private insurance plans may require a physician's referral for reimbursement, so we advise checking your insurance policy requirements beforehand.",
+      "In most regions, physiotherapists are primary healthcare providers, meaning you do not need a doctor's referral to book with us. That said, certain insurance plans still ask for a physician note for reimbursement, so it's a good idea to confirm your policy terms.",
+      "Referral policy:\n• Clinical access: Direct access — no doctor's prescription needed to evaluate and treat you\n• Insurance reimbursement: Some insurers require a medical referral for claim approval\n• Pro tip: Check your benefits handbook or contact your insurer to verify if a note is required."
+    ]
+  },
+  {
+    "id": "ins_pricing",
+    "category": "Billing & Insurance",
+    "question": "How much does a physiotherapy session cost without insurance?",
+    "alt_questions": [
+      "What are your private out-of-pocket rates?",
+      "How much do initial and follow-up sessions cost?",
+      "What are your fees for self-pay treatments?",
+      "How much is a physical therapy session?",
+      "Cost of physiotherapy assessment and treatment",
+      "What are your treatment fees?"
+    ],
+    "answer": "Our private self-pay rates are $125 for an Initial Assessment and Treatment (60 minutes) and $85 for Subsequent Treatment Sessions (30-45 minutes). We accept major credit cards, debit cards, and cash.",
+    "answers": [
+      "Our private self-pay rates are $125 for an Initial Assessment and Treatment (60 minutes) and $85 for Subsequent Treatment Sessions (30-45 minutes). We accept major credit cards, debit cards, and cash.",
+      "If you are paying out of pocket without insurance, our fees are straightforward and transparent: $125 for your 60-minute Initial Evaluation and Treatment, and $85 for follow-up sessions (30-45 minutes). We provide detailed itemized receipts for your records or tax deductions.",
+      "Transparent fee schedule:\n• Initial Assessment & Treatment (60 min): $125\n• Subsequent Follow-Up Treatment (30-45 min): $85\n• Complex / Extended Session (60 min): $120\n• Receipts: Detailed receipts with therapist license numbers provided for health spending accounts."
+    ]
+  },
+  {
+    "id": "ins_payment_methods",
+    "category": "Billing & Insurance",
+    "question": "What payment methods and financing options do you accept?",
+    "alt_questions": [
+      "Can I pay with credit card, debit, or cash?",
+      "Do you accept HSA and FSA health spending cards?",
+      "How do I pay for my physiotherapy appointments?",
+      "Are HSA or flexible spending account cards accepted?",
+      "What forms of payment do you take at reception?"
+    ],
+    "answer": "We accept Visa, MasterCard, American Express, Debit / Interac, cash, and Health Savings Account (HSA) or Flexible Spending Account (FSA) cards. Payment is processed at the conclusion of each visit.",
+    "answers": [
+      "We accept Visa, MasterCard, American Express, Debit / Interac, cash, and Health Savings Account (HSA) or Flexible Spending Account (FSA) cards. Payment is processed at the conclusion of each visit.",
+      "You can pay using any major credit card (Visa, MasterCard, Amex), debit cards, HSA/FSA benefit cards, or cash. We provide instant digital receipts upon payment.",
+      "Accepted payment methods:\n• Cards: Visa, MasterCard, American Express, and Debit\n• Benefit cards: HSA (Health Savings Account) & FSA (Flexible Spending Account)\n• Other: Cash and contactless mobile payments (Apple Pay, Google Pay)."
+    ]
+  },
+  {
+    "id": "treat_back_pain",
+    "category": "Conditions & Treatments",
+    "question": "Can physiotherapy help with lower back pain and sciatica?",
+    "alt_questions": [
+      "Do you treat herniated discs, pinched nerves, and sciatica?",
+      "How do you treat lumbar spine pain and stiffness?",
+      "Is physio effective for chronic lower back pain?",
+      "I have radiating pain down my leg from my back, can you help?",
+      "What exercises relieve lower back stiffness and disc bulge?",
+      "Physiotherapy for sciatica and acute lumbar strain"
+    ],
+    "answer": "Yes, lower back pain and sciatica are among our most common treatments. Our clinicians use spinal mobilization, core stabilization, targeted decompression exercises, postural retraining, and manual therapy to relieve nerve pressure and restore mobility.",
+    "answers": [
+      "Yes, lower back pain and sciatica are among our most common treatments. Our clinicians use spinal mobilization, core stabilization, targeted decompression exercises, postural retraining, and manual therapy to relieve nerve pressure and restore mobility.",
+      "Back pain and sciatica respond exceptionally well to physical therapy! We identify the root cause—whether it's disc irritation, joint stiffness, or muscular imbalance—and use gentle manual therapy, nerve glides, and stabilizing exercises to get you moving pain-free.",
+      "Our back & sciatica approach:\n• Thorough assessment: Identify nerve irritation vs disc vs sacroiliac joint involvement\n• Pain relief: Spinal mobilization, soft tissue release, and gentle traction/decompression\n• Long-term prevention: Core motor control, hip mobility, and ergonomic workstation coaching."
+    ]
+  },
+  {
+    "id": "treat_sports_injuries",
+    "category": "Conditions & Treatments",
+    "question": "Do you treat sports injuries and athletic rehabilitation?",
+    "alt_questions": [
+      "Can you treat sprained ankles, runner's knee, or torn ligaments?",
+      "Do you provide sports physical therapy for athletes?",
+      "How do you help injured athletes return to their sport?",
+      "I hurt my hamstring playing soccer, can you rehab it?",
+      "Do you treat tennis elbow and golfer's elbow?",
+      "Rehabilitation for athletic sports injuries and ACL sprains"
+    ],
+    "answer": "Yes, we treat athletes of all levels recovering from ankle sprains, rotator cuff injuries, ACL/MCL tears, tennis elbow, and muscle strains. Our programs include biomechanical assessment, strength rebuilding, and sport-specific return-to-play conditioning.",
+    "answers": [
+      "Yes, we treat athletes of all levels recovering from ankle sprains, rotator cuff injuries, ACL/MCL tears, tennis elbow, and muscle strains. Our programs include biomechanical assessment, strength rebuilding, and sport-specific return-to-play conditioning.",
+      "Whether you're a competitive athlete or weekend warrior, we specialize in sports injury rehabilitation. We focus on fixing the biomechanical flaws that caused the injury, restoring full power, and ensuring a safe return to your sport without re-injury.",
+      "Sports injury rehabilitation highlights:\n• Conditions treated: ACL/MCL tears, ankle sprains, hamstring/groin pulls, runner's knee, and tennis elbow\n• Phased recovery: Acute swelling control ➔ progressive strength building ➔ agility and plyometrics\n• Objective testing: Functional return-to-sport testing to ensure you are 100% ready to play."
+    ]
+  },
+  {
+    "id": "treat_shoulder_rotator",
+    "category": "Conditions & Treatments",
+    "question": "Do you treat shoulder impingement, rotator cuff tears, and frozen shoulder?",
+    "alt_questions": [
+      "Can physiotherapy fix shoulder pain and rotator cuff injuries?",
+      "How do you treat frozen shoulder or adhesive capsulitis?",
+      "I cannot lift my arm above my head, can physio help?",
+      "Treatment for shoulder bursitis and tendonitis",
+      "Rotator cuff rehab exercises and physical therapy"
+    ],
+    "answer": "Yes, we regularly treat rotator cuff tendinopathy, shoulder impingement, labral tears, and adhesive capsulitis (frozen shoulder). Treatment combines scapular stabilization, rotator cuff strengthening, glenohumeral joint mobilization, and postural correction.",
+    "answers": [
+      "Yes, we regularly treat rotator cuff tendinopathy, shoulder impingement, labral tears, and adhesive capsulitis (frozen shoulder). Treatment combines scapular stabilization, rotator cuff strengthening, glenohumeral joint mobilization, and postural correction.",
+      "Shoulder pain is very treatable with physical therapy! We restore normal gliding mechanics in your shoulder joint, release tight surrounding muscles, and build endurance in your rotator cuff so you can lift, reach, and sleep without pain.",
+      "Shoulder treatment plan:\n• Joint mobilization: Restores overhead range of motion and alleviates impingement\n• Rotator cuff strengthening: Targeted resistance exercises for the stabilizing tendons\n• Scapular mechanics: Retraining shoulder blade posture to prevent recurring irritation."
+    ]
+  },
+  {
+    "id": "treat_dry_needling",
+    "category": "Conditions & Treatments",
+    "question": "What is dry needling and how does it relieve pain?",
+    "alt_questions": [
+      "Do you offer intramuscular stimulation or dry needling?",
+      "Is dry needling the same as acupuncture?",
+      "How does dry needling release muscle knots and tightness?",
+      "Does dry needling hurt?",
+      "What are the benefits of dry needling for chronic pain?",
+      "Trigger point dry needling for tight muscles"
+    ],
+    "answer": "Dry needling involves inserting thin monofilament needles into myofascial trigger points (knots) to release deep muscle tension, improve blood flow, and alleviate pain. Unlike traditional acupuncture, dry needling is based on Western neuroanatomy.",
+    "answers": [
+      "Dry needling involves inserting thin monofilament needles into myofascial trigger points (knots) to release deep muscle tension, improve blood flow, and alleviate pain. Unlike traditional acupuncture, dry needling is based on Western neuroanatomy.",
+      "Dry needling is a highly effective technique where a fine sterile needle is tapped into a hyper-irritable muscle knot (trigger point). This triggers a local twitch response that resets muscle tone, boosts circulation, and rapidly reduces chronic pain.",
+      "Key facts about dry needling:\n• Purpose: Releases stubborn trigger points and deep muscle spasms\n• Difference from acupuncture: Grounded in modern neuromuscular anatomy rather than Eastern meridians\n• Sensation: Mild cramp or twitch sensation during treatment followed by profound muscle relaxation."
+    ]
+  },
+  {
+    "id": "treat_post_surgery",
+    "category": "Conditions & Treatments",
+    "question": "How soon after surgery can I start post-operative rehabilitation?",
+    "alt_questions": [
+      "When can I start rehab after joint replacement or arthroscopy?",
+      "Do you provide post-surgical physical therapy?",
+      "How early after surgery should I see a physiotherapist?",
+      "Rehab after knee replacement, hip surgery, or ACL reconstruction",
+      "Post-operative physiotherapy protocol and timeline"
+    ],
+    "answer": "Post-operative rehab timing depends on your surgeon's specific protocol. For joint replacements or arthroscopic repairs, gentle therapy often begins within a few days to 2 weeks post-surgery. We coordinate closely with your orthopedic surgeon's rehabilitation guidelines.",
+    "answers": [
+      "Post-operative rehab timing depends on your surgeon's specific protocol. For joint replacements or arthroscopic repairs, gentle therapy often begins within a few days to 2 weeks post-surgery. We coordinate closely with your orthopedic surgeon's rehabilitation guidelines.",
+      "Post-op physical therapy typically starts within 1 to 2 weeks following surgery, or even sooner for joint replacements. We follow your orthopedic surgeon's exact protocols to manage swelling, safely regain range of motion, and rebuild functional strength step-by-step.",
+      "Post-surgical rehabilitation roadmap:\n• Phase 1 (Weeks 1-4): Reduce edema, protect surgical repairs, gentle passive range of motion\n• Phase 2 (Weeks 4-12): Active mobility, muscle activation, gait normalization\n• Phase 3 (3+ months): Progressive resistance training and functional return to activity."
+    ]
+  },
+  {
+    "id": "treat_neck_headaches",
+    "category": "Conditions & Treatments",
+    "question": "Can physiotherapy help with neck stiffness and cervicogenic headaches?",
+    "alt_questions": [
+      "Do you treat stiff neck, whiplash, and tension headaches?",
+      "Can physical therapy fix neck pain caused by computer posture?",
+      "How do you treat headaches originating from the neck?",
+      "Do you help with desk posture neck pain and tension?",
+      "Relief for chronic headaches and cervical spine stiffness"
+    ],
+    "answer": "Yes, neck stiffness and cervicogenic headaches frequently stem from cervical joint restrictions and postural strain. We provide joint mobilization, deep cervical flexor strengthening, ergonomic adjustments, and soft tissue release to alleviate neck pain and recurring headaches.",
+    "answers": [
+      "Yes, neck stiffness and cervicogenic headaches frequently stem from cervical joint restrictions and postural strain. We provide joint mobilization, deep cervical flexor strengthening, ergonomic adjustments, and soft tissue release to alleviate neck pain and recurring headaches.",
+      "Many tension headaches actually originate from the upper neck joints and tight suboccipital muscles, especially from computer use. By mobilizing the cervical joints, strengthening deep neck flexors, and correcting posture, we can dramatically reduce both pain and headache frequency.",
+      "Neck & headache care summary:\n• Root cause: Cervical spine facet irritation and postural muscle tension ('tech neck')\n• Treatment tools: Gentle cervical mobilization, trigger point release, and chin-tuck stabilizers\n• Long-term benefit: Ergonomic recommendations for your computer and sleep setup to prevent recurrence."
+    ]
+  },
+  {
+    "id": "proc_num_sessions",
+    "category": "Treatment Process & Expectations",
+    "question": "How many physiotherapy sessions will I need to recover?",
+    "alt_questions": [
+      "How long does physical therapy take to fix an injury?",
+      "How often do I need to come in for treatment?",
+      "What is the average duration of a physio treatment plan?",
+      "How many visits are typically required for recovery?",
+      "How many weeks does physiotherapy usually last?"
+    ],
+    "answer": "Recovery duration varies based on the condition. Mild acute strains often recover within 4 to 6 sessions, whereas chronic pain or post-surgical rehabilitation may require 8 to 16 sessions. Your physiotherapist will provide a customized treatment plan with clear recovery milestones at your first visit.",
+    "answers": [
+      "Recovery duration varies based on the condition. Mild acute strains often recover within 4 to 6 sessions, whereas chronic pain or post-surgical rehabilitation may require 8 to 16 sessions. Your physiotherapist will provide a customized treatment plan with clear recovery milestones at your first visit.",
+      "Every person heals at their own pace, but as a general guide, acute sprains or minor injuries often require 4 to 6 visits. More chronic issues or post-surgical cases typically take 8 to 12+ sessions. Your therapist will discuss exact timelines and milestones during your initial evaluation.",
+      "Expected recovery timelines:\n• Acute minor injuries (sprains, simple strains): 4 – 6 sessions over 2-4 weeks\n• Moderate conditions (disc issues, tendinopathy): 6 – 10 sessions over 4-8 weeks\n• Major surgeries & chronic issues: 10 – 16+ sessions with gradual home maintenance."
+    ]
+  },
+  {
+    "id": "proc_pain_during_treatment",
+    "category": "Treatment Process & Expectations",
+    "question": "Will physiotherapy treatment hurt or be painful?",
+    "alt_questions": [
+      "Is physical therapy painful?",
+      "Is it normal to feel sore after a physio session?",
+      "Will stretching or manual therapy hurt my injury?",
+      "Should I expect pain during my physical therapy appointment?",
+      "Does physical therapy cause soreness afterwards?",
+      "Will treatment hurt?"
+    ],
+    "answer": "Treatment should not cause sharp or agonizing pain. Some mild discomfort or muscle soreness (similar to post-exercise fatigue) is normal for 24-48 hours after treatment. We always work within your tolerance and encourage you to communicate how you feel throughout each session.",
+    "answers": [
+      "Treatment should not cause sharp or agonizing pain. Some mild discomfort or muscle soreness (similar to post-exercise fatigue) is normal for 24-48 hours after treatment. We always work within your tolerance and encourage you to communicate how you feel throughout each session.",
+      "Your comfort and safety are our top priority! While you might feel mild muscle soreness similar to a good workout for a day or two after, treatment should never cause sharp or severe pain. We continually check in with you and adjust our techniques to your tolerance level.",
+      "What to expect regarding comfort:\n• During treatment: Focused within your comfort threshold; no sharp or aggressive pain\n• Post-session: Mild muscle soreness for 24 to 48 hours is a normal sign of tissue remodeling\n• Communication: You are always in full control of your session pace."
+    ]
+  },
+  {
+    "id": "proc_home_exercises",
+    "category": "Treatment Process & Expectations",
+    "question": "Will I be given exercises to do at home between visits?",
+    "alt_questions": [
+      "Do I have to do home exercises between appointments?",
+      "Will you give me a home exercise program?",
+      "How often should I practice my physical therapy homework?",
+      "Do you provide videos or handouts for home exercises?",
+      "Is a home routine necessary for recovery?"
+    ],
+    "answer": "Yes! A customized Home Exercise Program (HEP) is an essential component of your recovery. We provide clear digital instructions with video demonstrations so you can practice safe, effective movements between clinic appointments.",
+    "answers": [
+      "Yes! A customized Home Exercise Program (HEP) is an essential component of your recovery. We provide clear digital instructions with video demonstrations so you can practice safe, effective movements between clinic appointments.",
+      "Definitely! In-clinic therapy jump-starts your healing, but doing your prescribed daily exercises at home cements long-term results. We provide easy-to-follow video routines right to your phone so you feel confident doing them.",
+      "Home exercise program features:\n• Formats: Digital app access, video links, or printable step-by-step handouts\n• Time commitment: Usually just 10 to 15 minutes, 1-2 times daily\n• Impact: Patients who consistently perform home exercises recover up to 40% faster."
+    ]
+  },
+  {
+    "id": "gen_hours_location",
+    "category": "General Clinic Information",
+    "question": "What are your clinic hours and clinic location?",
+    "alt_questions": [
+      "Where is the physiotherapy clinic located?",
+      "What are your opening hours on weekdays and weekends?",
+      "Are you open in the evening or on Saturdays?",
+      "Where is your clinic and when are you open?",
+      "Clinic address, hours of operation, and weekend schedule"
+    ],
+    "answer": "Our clinic is located at 450 Wellness Way, Suite 200. We are open Monday to Friday from 7:00 AM to 8:00 PM, and Saturdays from 8:00 AM to 2:00 PM. We are closed on Sundays and major public holidays.",
+    "answers": [
+      "Our clinic is located at 450 Wellness Way, Suite 200. We are open Monday to Friday from 7:00 AM to 8:00 PM, and Saturdays from 8:00 AM to 2:00 PM. We are closed on Sundays and major public holidays.",
+      "We're conveniently located at 450 Wellness Way, Suite 200. To accommodate busy work and family schedules, we offer early morning and evening appointments! We are open Monday through Friday from 7 AM to 8 PM, and Saturdays from 8 AM to 2 PM.",
+      "Location & Hours overview:\n• Address: 450 Wellness Way, Suite 200\n• Weekdays (Mon-Fri): 7:00 AM – 8:00 PM\n• Weekends (Saturday): 8:00 AM – 2:00 PM (Closed Sundays)\n• Contact: (555) 019-2834 | reception@clinic.com"
+    ]
+  },
+  {
+    "id": "gen_parking_accessibility",
+    "category": "General Clinic Information",
+    "question": "Is parking available and is your facility wheelchair accessible?",
+    "alt_questions": [
+      "Where can I park when visiting the clinic?",
+      "Does the clinic have wheelchair ramps and an elevator?",
+      "Are there handicap parking spaces available?",
+      "Is parking free for patients?",
+      "Is your building accessible for disabled patients and walkers?",
+      "Parking directions and wheelchair accessibility"
+    ],
+    "answer": "Yes, we offer free patient parking directly outside our clinic entrance, including reserved accessible parking stalls. Our building features ground-level ramps, wide automatic doors, and an elevator to the second floor.",
+    "answers": [
+      "Yes, we offer free patient parking directly outside our clinic entrance, including reserved accessible parking stalls. Our building features ground-level ramps, wide automatic doors, and an elevator to the second floor.",
+      "Yes! We provide complimentary on-site parking with dedicated handicap stalls right near the front entrance. Our facility is 100% barrier-free with elevator access, ground ramps, and wide doors to accommodate wheelchairs, walkers, and strollers.",
+      "Parking & Accessibility summary:\n• Parking: Complimentary patient parking lot directly in front of the clinic\n• Accessible parking: Dedicated stalls adjacent to the main ramp entrance\n• Building features: Automatic entrance doors, wheelchair-accessible elevator, and spacious ADA-compliant treatment rooms."
+    ]
+  }
+]
