@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clinic FAQ Chatbot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-page: #f7f8fa;
+      --surface-white: #ffffff;
+      --border-light: #e5e7eb;
+      --border-subtle: #edf0f3;
+      --text-main: #1f2937;
+      --text-secondary: #4b5563;
+      --text-muted: #6b7280;
+      --clinic-primary: #1e3a5f;
+      --clinic-primary-hover: #152b47;
+      --clinic-accent: #0d9488;
+      --clinic-accent-light: #f0fdfa;
+      --user-bubble: #1e3a5f;
+      --ai-bubble: #ffffff;
+      --emergency-bg: #fef2f2;
+      --emergency-border: #fecaca;
+      --emergency-text: #991b1b;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --shadow-card: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+      --shadow-elevated: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+      --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Minimal Clinic Header */
+    header {
+      background: var(--surface-white);
+      border-bottom: 1px solid var(--border-light);
+      padding: 0.9rem 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+
+    .header-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .clinic-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .clinic-cross-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      background: #f0fdfa;
+      border: 1px solid #ccfbf1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--clinic-accent);
+      flex-shrink: 0;
+    }
+
+    .clinic-cross-icon svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    .clinic-title h1 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--clinic-primary);
+      line-height: 1.25;
+    }
+
+    .clinic-title p {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .session-badge {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      background: #f3f4f6;
+      padding: 0.3rem 0.65rem;
+      border-radius: 20px;
+      border: 1px solid var(--border-light);
+      display: none;
+    }
+
+    @media (min-width: 640px) {
+      .session-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+      }
+    }
+
+    .btn-header {
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      background: var(--surface-white);
+      border: 1px solid var(--border-light);
+      padding: 0.35rem 0.65rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.15s ease;
+    }
+
+    .btn-header:hover {
+      background: #f9fafb;
+      color: var(--clinic-primary);
+      border-color: #d1d5db;
+    }
+
+    /* Main Chat Layout */
+    main {
+      flex: 1;
+      max-width: 900px;
+      width: 100%;
+      margin: 1.5rem auto;
+      padding: 0 1.25rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-container {
+      background: var(--surface-white);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      flex-direction: column;
+      height: 720px;
+      overflow: hidden;
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      background: #fafaf9;
+    }
+
+    /* Message Rows */
+    .message-row {
+      display: flex;
+      gap: 0.75rem;
+      max-width: 100%;
+      animation: fadeIn 0.2s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(4px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .message-row.user-row {
+      justify-content: flex-end;
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .ai-avatar {
+      background: #f0fdfa;
+      border: 1px solid #ccfbf1;
+      color: var(--clinic-accent);
+    }
+
+    .user-avatar {
+      background: #e2e8f0;
+      color: #475569;
+    }
+
+    /* Bubbles */
+    .message-bubble {
+      max-width: 82%;
+      padding: 0.9rem 1.15rem;
+      border-radius: var(--radius-md);
+      font-size: 0.91rem;
+      line-height: 1.55;
+    }
+
+    .user-bubble {
+      background: var(--user-bubble);
+      color: #ffffff;
+      border-bottom-right-radius: 2px;
+    }
+
+    .ai-bubble {
+      background: var(--ai-bubble);
+      border: 1px solid var(--border-light);
+      color: var(--text-main);
+      border-bottom-left-radius: 2px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .ai-bubble.emergency-bubble {
+      background: var(--emergency-bg);
+      border: 1px solid var(--emergency-border);
+      color: var(--emergency-text);
+    }
+
+    .message-text {
+      word-break: break-word;
+    }
+
+    /* Embedded FAQ List in Welcome Message */
+    .welcome-faq-card {
+      margin-top: 0.4rem;
+      padding-top: 0.85rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .welcome-faq-card p.faq-prompt {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--clinic-primary);
+      margin-bottom: 0.6rem;
+    }
+
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .faq-item-button {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      background: #fbfbfb;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      padding: 0.55rem 0.85rem;
+      font-family: inherit;
+      font-size: 0.84rem;
+      color: var(--text-secondary);
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      width: 100%;
+    }
+
+    .faq-item-button:hover {
+      background: #f0fdfa;
+      border-color: #99f6e4;
+      color: var(--clinic-primary);
+      transform: translateX(2px);
+    }
+
+    .arrow-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #f3f4f6;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      flex-shrink: 0;
+      transition: all 0.15s ease;
+    }
+
+    .faq-item-button:hover .arrow-icon {
+      background: var(--clinic-accent);
+      color: #ffffff;
+    }
+
+    /* Metadata Bar */
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem;
+      padding-top: 0.45rem;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .meta-tag {
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-weight: 500;
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+    }
+
+    .tag-confidence {
+      color: #047857;
+      background: #ecfdf5;
+      border-color: #d1fae5;
+    }
+
+    .tag-fallback {
+      color: #b45309;
+      background: #fffbeb;
+      border-color: #fef3c7;
+    }
+
+    .tag-emergency {
+      color: #b91c1c;
+      background: #fef2f2;
+      border-color: #fee2e2;
+    }
+
+    /* Fallback Suggestions */
+    .suggestions-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-top: 0.25rem;
+    }
+
+    .suggestions-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    /* Typing Indicator */
+    .typing-row {
+      display: none;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0 1.75rem 0.5rem 1.75rem;
+      background: #fafaf9;
+    }
+
+    .typing-bubble {
+      background: var(--surface-white);
+      border: 1px solid var(--border-light);
+      padding: 0.65rem 0.95rem;
+      border-radius: var(--radius-md);
+      display: inline-flex;
+      gap: 4px;
+    }
+
+    .typing-dot {
+      width: 5px;
+      height: 5px;
+      background: #9ca3af;
+      border-radius: 50%;
+      animation: pulse 1.4s infinite ease-in-out both;
+    }
+
+    .typing-dot:nth-child(1) {
+      animation-delay: -0.32s;
+    }
+
+    .typing-dot:nth-child(2) {
+      animation-delay: -0.16s;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      80%,
+      100% {
+        transform: scale(0);
+        opacity: 0.3;
+      }
+
+      40% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    /* Input Footer */
+    .chat-input-wrapper {
+      padding: 0.9rem 1.25rem;
+      background: var(--surface-white);
+      border-top: 1px solid var(--border-light);
+    }
+
+    .chat-form {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .chat-input {
+      flex: 1;
+      background: #fcfcfc;
+      border: 1px solid #d1d5db;
+      border-radius: var(--radius-md);
+      padding: 0.75rem 1rem;
+      font-family: inherit;
+      font-size: 0.9rem;
+      color: var(--text-main);
+      outline: none;
+      transition: all 0.15s ease;
+    }
+
+    .chat-input:focus {
+      background: #ffffff;
+      border-color: var(--clinic-primary);
+      box-shadow: 0 0 0 2px rgba(30, 58, 95, 0.1);
+    }
+
+    .btn-send {
+      background: var(--clinic-primary);
+      color: #ffffff;
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 0.75rem 1.15rem;
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: background-color 0.15s ease;
+    }
+
+    .btn-send:hover {
+      background: var(--clinic-primary-hover);
+    }
+
+    .btn-send:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* Minimal Modals */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(17, 24, 39, 0.4);
+      backdrop-filter: blur(2px);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .modal-box {
+      background: var(--surface-white);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 820px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-elevated);
+      overflow: hidden;
+    }
+
+    .modal-header {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fafaf9;
+    }
+
+    .modal-header h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--clinic-primary);
+    }
+
+    .modal-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.25rem;
+      font-size: 0.85rem;
+    }
+
+    .btn-close {
+      background: none;
+      border: none;
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 2px 6px;
+    }
+
+    .btn-close:hover {
+      color: var(--text-main);
+    }
+
+    /* Logs Table */
+    .logs-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+    }
+
+    .logs-table th {
+      text-align: left;
+      padding: 0.6rem 0.75rem;
+      border-bottom: 1px solid #e5e7eb;
+      color: var(--text-muted);
+      font-weight: 600;
+      background: #f9fafb;
+    }
+
+    .logs-table td {
+      padding: 0.65rem 0.75rem;
+      border-bottom: 1px solid #f3f4f6;
+      vertical-align: top;
+    }
+
+    .logs-table tr:hover {
+      background: #fafaf9;
+    }
+
+    /* Health Info Grid */
+    .health-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .health-card {
+      background: #fafaf9;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .health-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .health-val {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--clinic-primary);
+    }
+
+    @media (max-width: 640px) {
+      .chat-container {
+        height: 85vh;
+      }
+
+      .message-bubble {
+        max-width: 90%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Minimal Header -->
+  <header>
+    <div class="header-inner">
+      <div class="clinic-brand">
+        <div class="clinic-cross-icon">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M19 10.5h-5.5V5a1.5 1.5 0 0 0-3 0v5.5H5a1.5 1.5 0 0 0 0 3h5.5V19a1.5 1.5 0 0 0 3 0v-5.5H19a1.5 1.5 0 0 0 0-3z" />
+          </svg>
+        </div>
+        <div class="clinic-title">
+          <h1>Clinic FAQ Chatbot</h1>
+          <p>Patient Inquiries & Information Assistant</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <div class="session-badge" id="sessionBadge">
+          Session: <span id="sessionIdText"
+            style="font-family: monospace; font-weight: 600; color: var(--clinic-primary);">...</span>
+        </div>
+        <button class="btn-header" id="btnReset" title="Start a new chat session">
+          <span>↺</span> New Chat
+        </button>
+        <button class="btn-header" id="btnLogs" title="View SQLite interaction logs">
+          <span>📋</span> Logs
+        </button>
+        <button class="btn-header" id="btnHealth" title="Check engine health">
+          <span>●</span> Status
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Chat Workspace -->
+  <main>
+    <div class="chat-container">
+      <div class="chat-messages" id="chatMessages">
+        <!-- AI Welcome Message with 5 Frequent FAQs -->
+        <div class="message-row">
+          <div class="avatar ai-avatar">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M19 10.5h-5.5V5a1.5 1.5 0 0 0-3 0v5.5H5a1.5 1.5 0 0 0 0 3h5.5V19a1.5 1.5 0 0 0 3 0v-5.5H19a1.5 1.5 0 0 0 0-3z" />
+            </svg>
+          </div>
+          <div class="message-bubble ai-bubble">
+            <div class="message-text">
+              Hello! I'm your Assistant here.
+              <br><br>
+              I can help you with appointment scheduling, insurance direct billing, treatment methods, and what to
+              expect during your visits.
+            </div>
+
+            <!-- 5 Most Frequent FAQs with Arrow Buttons -->
+            <div class="welcome-faq-card">
+              <p class="faq-prompt">Frequently Asked Questions &middot; Click to ask:</p>
+              <div class="faq-list">
+                <button class="faq-item-button"
+                  onclick="askQuestion('How do I book an initial physiotherapy appointment?')">
+                  <span>How do I book an initial physiotherapy appointment?</span>
+                  <span class="arrow-icon">&rarr;</span>
+                </button>
+                <button class="faq-item-button"
+                  onclick="askQuestion('What should I wear to my physiotherapy appointment?')">
+                  <span>What should I wear to my appointment?</span>
+                  <span class="arrow-icon">&rarr;</span>
+                </button>
+                <button class="faq-item-button"
+                  onclick="askQuestion('Do you accept insurance and offer direct billing?')">
+                  <span>Do you accept insurance and offer direct billing?</span>
+                  <span class="arrow-icon">&rarr;</span>
+                </button>
+                <button class="faq-item-button"
+                  onclick="askQuestion('Can physiotherapy help with lower back pain and sciatica?')">
+                  <span>Can physiotherapy help with lower back pain and sciatica?</span>
+                  <span class="arrow-icon">&rarr;</span>
+                </button>
+                <button class="faq-item-button"
+                  onclick="askQuestion('Do I need a doctor\'s referral to see a physiotherapist?')">
+                  <span>Do I need a doctor's referral to see a physiotherapist?</span>
+                  <span class="arrow-icon">&rarr;</span>
+                </button>
+                <button class="faq-item-button"
+                  onclick="askQuestion('How much does a physiotherapy session cost without insurance?')">
+                  <span>What are your private fees without insurance?</span>
+                  <span class="arrow-icon">&rarr;</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Typing indicator -->
+      <div class="typing-row" id="typingIndicator">
+        <div class="avatar ai-avatar">●</div>
+        <div class="typing-bubble">
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+        </div>
+      </div>
+
+      <!-- Input Area -->
+      <div class="chat-input-wrapper">
+        <form class="chat-form" id="chatForm">
+          <input type="text" class="chat-input" id="chatInput" placeholder="Type your question here..."
+            autocomplete="off" required />
+          <button type="submit" class="btn-send" id="btnSend">
+            <span>Send</span>
+            <span>&rarr;</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- Logs Modal -->
+  <div class="modal-overlay" id="logsModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2>Conversation Audit Logs (SQLite)</h2>
+        <div style="display: flex; gap: 0.5rem; align-items: center;">
+          <button class="btn-header" id="btnRefreshLogs">Refresh</button>
+          <button class="btn-close" id="btnCloseLogs">&times;</button>
+        </div>
+      </div>
+      <div class="modal-body" id="logsModalBody">
+        <div style="text-align: center; color: var(--text-muted); padding: 2rem;">Loading logs...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Status / Health Modal -->
+  <div class="modal-overlay" id="healthModal">
+    <div class="modal-box" style="max-width: 520px;">
+      <div class="modal-header">
+        <h2>System Status</h2>
+        <button class="btn-close" id="btnCloseHealth">&times;</button>
+      </div>
+      <div class="modal-body" id="healthModalBody">
+        <div style="text-align: center; color: var(--text-muted); padding: 2rem;">Checking system status...</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="faq_data.js"></script>
+  <script src="static/faq_data.js"></script>
+  <script type="module">
+    // Load Transformers.js for client-side semantic matching when running statically
+    try {
+      const { pipeline, env } = await import('https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2');
+      env.allowLocalModels = false;
+      pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2', { quantized: true })
+        .then(emb => {
+          window.nlpEmbedder = emb;
+          console.log('Client-side NLP embeddings model active.');
+        })
+        .catch(e => console.info('Client-side neural embedder loading in background:', e));
+    } catch (err) {
+      console.info('Transformers.js CDN not reachable, using lexical and precomputed vector matching.');
+    }
+  </script>
+
+  <script>
+    // Session setup
+    let sessionId = localStorage.getItem('clinic_faq_sess');
+    if (!sessionId) {
+      sessionId = 'sess_' + Math.random().toString(36).substring(2, 9);
+      localStorage.setItem('clinic_faq_sess', sessionId);
+    }
+
+    const sessionIdText = document.getElementById('sessionIdText');
+    const chatMessages = document.getElementById('chatMessages');
+    const chatForm = document.getElementById('chatForm');
+    const chatInput = document.getElementById('chatInput');
+    const typingIndicator = document.getElementById('typingIndicator');
+    const btnSend = document.getElementById('btnSend');
+
+    sessionIdText.textContent = sessionId;
+    let lastCategory = null;
+    let sessionTurnCount = 0;
+
+    // Reset Chat Session
+    document.getElementById('btnReset').addEventListener('click', () => {
+      sessionId = 'sess_' + Math.random().toString(36).substring(2, 9);
+      localStorage.setItem('clinic_faq_sess', sessionId);
+      sessionIdText.textContent = sessionId;
+      location.reload();
+    });
+
+    // Send Form
+    chatForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const message = chatInput.value.trim();
+      if (!message) return;
+      sendMessage(message);
+    });
+
+    function askQuestion(q) {
+      sendMessage(q);
+    }
+
+    // Client-side NLP & Emergency Detection for Static Hosting
+    const EMERGENCY_PATTERNS = [
+      /\b(cauda equina)\b/i,
+      /\b(saddle an[ae]sthesia)\b/i,
+      /\b(loss of (bowel|bladder) control)\b/i,
+      /\b(bowel incontinence|urinary incontinence|bladder incontinence)\b/i,
+      /\b(numbness in (groin|genitals|buttocks|between (my )?legs))\b/i,
+      /\b(cannot feel (my )?legs|can't feel (my )?legs|paralysis|paralysed|paralyzed)\b/i,
+      /\b(sudden weakness in (both|my) legs|legs gave out suddenly)\b/i,
+      /\b(foot drop (sudden|acute))\b/i,
+      /\b(chest pain|pressure in chest|crushing chest pain)\b/i,
+      /\b(heart attack|cardiac arrest)\b/i,
+      /\b(shortness of breath|difficulty breathing|cannot breathe|can't breathe)\b/i,
+      /\b(stroke|facial droop|slurred speech)\b/i,
+      /\b(passed out|fainted|loss of consciousness|unresponsive)\b/i,
+      /\b(coughing (up )?blood)\b/i,
+      /\b(bone sticking out|bone protruding|compound fracture|open fracture)\b/i,
+      /\b(uncontrolled bleeding|profuse bleeding|bleeding heavily)\b/i,
+      /\b(severe head injury|concussion vomiting|unbearable sudden headache)\b/i,
+      /\b(call 911|dial 911|emergency room|call (an )?ambulance|urgent care right now)\b/i
+    ];
+
+    function cleanText(text) {
+      return text.toLowerCase().replace(/[^\w\s]/g, ' ').replace(/\s+/g, ' ').trim();
+    }
+
+    function dotProduct(a, b) {
+      let sum = 0;
+      for (let i = 0; i < a.length; i++) sum += a[i] * b[i];
+      return sum;
+    }
+
+    async function clientSideChat(text) {
+      const data = window.CLINIC_STATIC_DATA;
+      if (!data) {
+        throw new Error('Static FAQ database not loaded.');
+      }
+
+      // 1. Emergency detection
+      for (const pattern of EMERGENCY_PATTERNS) {
+        if (pattern.test(text)) {
+          return recordExchange(text, {
+            session_id: sessionId,
+            answer: data.emergency_response,
+            confidence: 1.0,
+            matched_faq_id: 'emergency_urgent_care',
+            category: 'emergency',
+            flag: 'emergency',
+            suggested_questions: []
+          });
+        }
+      }
+
+      sessionTurnCount++;
+      const cleaned = cleanText(text);
+      const queryTokens = new Set(cleaned.split(' ').filter(Boolean));
+
+      let candidateScores = [];
+
+      // 2. Neural vector search if in-browser model loaded
+      if (window.nlpEmbedder) {
+        try {
+          const output = await window.nlpEmbedder(cleaned, { pooling: 'mean', normalize: true });
+          const qVec = Array.from(output.data);
+          candidateScores = data.variant_embeddings.map(vec => dotProduct(qVec, vec));
+        } catch (err) {
+          console.warn('Browser embedding exception:', err);
+        }
+      }
+
+      // 3. Fallback token-overlap scoring
+      if (candidateScores.length === 0) {
+        candidateScores = data.variant_texts.map(vText => {
+          const vClean = cleanText(vText);
+          const vTokens = vClean.split(' ').filter(Boolean);
+          let matchCount = 0;
+          for (const tok of vTokens) {
+            if (queryTokens.has(tok)) matchCount++;
+          }
+          return matchCount / Math.max(vTokens.length, 1);
+        });
+      }
+
+      // Aggregate maximum score per FAQ
+      const faqBestScores = {};
+      for (let i = 0; i < candidateScores.length; i++) {
+        const fId = data.variant_faq_ids[i];
+        const score = candidateScores[i];
+        if (!faqBestScores[fId] || score > faqBestScores[fId]) {
+          faqBestScores[fId] = score;
+        }
+      }
+
+      const faqMap = {};
+      data.faqs.forEach(f => { faqMap[f.id] = f; });
+
+      // Apply contextual & keyword boosts
+      const scoredFaqs = Object.keys(faqBestScores).map(fId => {
+        const faq = faqMap[fId];
+        let score = faqBestScores[fId];
+
+        if (lastCategory && faq.category === lastCategory) {
+          score += 0.08;
+        }
+
+        const patterns = data.keyword_patterns[fId] || [];
+        for (const pat of patterns) {
+          if (cleaned.includes(pat.toLowerCase())) {
+            score += 0.08;
+            break;
+          }
+        }
+
+        return { faq, score: Math.min(score, 0.99) };
+      });
+
+      scoredFaqs.sort((a, b) => b.score - a.score);
+      const topMatch = scoredFaqs[0];
+      const threshold = 0.55;
+
+      if (topMatch && topMatch.score >= threshold) {
+        const faq = topMatch.faq;
+        lastCategory = faq.category;
+        let answerText = faq.answer;
+        if (faq.answers && faq.answers.length > 0) {
+          answerText = faq.answers[sessionTurnCount % faq.answers.length];
+        }
+
+        return recordExchange(text, {
+          session_id: sessionId,
+          answer: answerText,
+          confidence: Math.round(topMatch.score * 100) / 100,
+          matched_faq_id: faq.id,
+          category: faq.category,
+          flag: 'normal',
+          suggested_questions: []
+        });
+      } else {
+        const suggestions = scoredFaqs.slice(0, 3).map(item => item.faq.question);
+        return recordExchange(text, {
+          session_id: sessionId,
+          answer: data.fallback_message,
+          confidence: topMatch ? Math.round(topMatch.score * 100) / 100 : 0.25,
+          matched_faq_id: topMatch ? topMatch.faq.id : null,
+          category: topMatch ? topMatch.faq.category : null,
+          flag: 'fallback',
+          suggested_questions: suggestions
+        });
+      }
+    }
+
+    function recordExchange(userText, responseObj) {
+      try {
+        const logs = JSON.parse(localStorage.getItem('clinic_chat_logs') || '[]');
+        logs.unshift({
+          id: 'usr_' + Date.now().toString(36),
+          role: 'user',
+          text: userText,
+          matched_faq_id: null,
+          confidence: null,
+          flag: null,
+          timestamp: new Date().toISOString()
+        });
+        logs.unshift({
+          id: 'bot_' + (Date.now() + 1).toString(36),
+          role: 'assistant',
+          text: responseObj.answer,
+          matched_faq_id: responseObj.matched_faq_id,
+          confidence: responseObj.confidence,
+          flag: responseObj.flag,
+          timestamp: new Date().toISOString()
+        });
+        localStorage.setItem('clinic_chat_logs', JSON.stringify(logs.slice(0, 200)));
+      } catch (e) {
+        console.warn('localStorage error:', e);
+      }
+      return responseObj;
+    }
+
+    // Main sendMessage function
+    async function sendMessage(text) {
+      chatInput.value = '';
+      chatInput.disabled = true;
+      btnSend.disabled = true;
+
+      appendUserBubble(text);
+      showTyping(true);
+
+      try {
+        let data = null;
+
+        // Try API endpoint first (if running FastAPI server)
+        try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 2000);
+          const response = await fetch('/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              message: text,
+              session_id: sessionId
+            }),
+            signal: controller.signal
+          });
+          clearTimeout(timeoutId);
+          if (response.ok) {
+            data = await response.json();
+          }
+        } catch (_) {
+          // Backend not reachable, fall back seamlessly to static in-browser engine
+        }
+
+        if (!data) {
+          data = await clientSideChat(text);
+        }
+
+        showTyping(false);
+        appendAIBubble(data);
+      } catch (err) {
+        showTyping(false);
+        appendErrorBubble("I'm having trouble processing your inquiry. Please try again in a moment.");
+        console.error(err);
+      } finally {
+        chatInput.disabled = false;
+        btnSend.disabled = false;
+        chatInput.focus();
+      }
+    }
+
+    function appendUserBubble(text) {
+      const row = document.createElement('div');
+      row.className = 'message-row user-row';
+      row.innerHTML = `
+        <div class="message-bubble user-bubble">
+          <div class="message-text">${escapeHtml(text)}</div>
+        </div>
+      `;
+      chatMessages.appendChild(row);
+      scrollToBottom();
+    }
+
+    function appendAIBubble(data) {
+      const row = document.createElement('div');
+      row.className = 'message-row';
+
+      const isEmergency = data.flag === 'emergency';
+      const bubbleClass = isEmergency ? 'message-bubble ai-bubble emergency-bubble' : 'message-bubble ai-bubble';
+
+      const confPercent = Math.round(data.confidence * 100);
+      let confTagClass = 'tag-confidence';
+      if (data.confidence < 0.55) {
+        confTagClass = 'tag-fallback';
+      } else if (isEmergency) {
+        confTagClass = 'tag-emergency';
+      }
+
+      // Metadata Bar - Display only the match percentage
+      let metaBar = `
+        <div class="meta-bar">
+          <span class="meta-tag ${confTagClass}">${confPercent}% Match</span>
+        </div>
+      `;
+
+      // Suggested questions if fallback
+      let suggestionsHtml = '';
+      if (data.suggested_questions && data.suggested_questions.length > 0) {
+        suggestionsHtml = `
+          <div class="suggestions-wrapper">
+            <span class="suggestions-label">Related Questions:</span>
+            <div class="faq-list">
+              ${data.suggested_questions.map(q => `
+                <button class="faq-item-button" onclick="askQuestion('${escapeHtml(q)}')">
+                  <span>${escapeHtml(q)}</span>
+                  <span class="arrow-icon">&rarr;</span>
+                </button>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      row.innerHTML = `
+        <div class="avatar ai-avatar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 10.5h-5.5V5a1.5 1.5 0 0 0-3 0v5.5H5a1.5 1.5 0 0 0 0 3h5.5V19a1.5 1.5 0 0 0 3 0v-5.5H19a1.5 1.5 0 0 0 0-3z"/>
+          </svg>
+        </div>
+        <div class="${bubbleClass}">
+          <div class="message-text">${escapeHtml(data.answer)}</div>
+          ${metaBar}
+          ${suggestionsHtml}
+        </div>
+      `;
+
+      chatMessages.appendChild(row);
+      scrollToBottom();
+    }
+
+    function appendErrorBubble(msg) {
+      const row = document.createElement('div');
+      row.className = 'message-row';
+      row.innerHTML = `
+        <div class="avatar ai-avatar">!</div>
+        <div class="message-bubble ai-bubble emergency-bubble">
+          <div class="message-text">${escapeHtml(msg)}</div>
+        </div>
+      `;
+      chatMessages.appendChild(row);
+      scrollToBottom();
+    }
+
+    function showTyping(show) {
+      typingIndicator.style.display = show ? 'flex' : 'none';
+      scrollToBottom();
+    }
+
+    function scrollToBottom() {
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // Logs Modal
+    const logsModal = document.getElementById('logsModal');
+    const btnLogs = document.getElementById('btnLogs');
+    const btnCloseLogs = document.getElementById('btnCloseLogs');
+    const btnRefreshLogs = document.getElementById('btnRefreshLogs');
+    const logsModalBody = document.getElementById('logsModalBody');
+
+    btnLogs.addEventListener('click', () => {
+      logsModal.style.display = 'flex';
+      fetchLogs();
+    });
+    btnCloseLogs.addEventListener('click', () => logsModal.style.display = 'none');
+    btnRefreshLogs.addEventListener('click', fetchLogs);
+
+    async function fetchLogs() {
+      logsModalBody.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 2rem;">Loading logs...</div>';
+      try {
+        let logs = null;
+        try {
+          const res = await fetch('/logs?limit=40');
+          if (res.ok) logs = await res.json();
+        } catch (_) {}
+
+        if (!logs || logs.length === 0) {
+          logs = JSON.parse(localStorage.getItem('clinic_chat_logs') || '[]');
+        }
+
+        if (!logs || logs.length === 0) {
+          logsModalBody.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 2rem;">No logs recorded yet.</div>';
+          return;
+        }
+
+        let html = `
+          <table class="logs-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Role</th>
+                <th>Message Text</th>
+                <th>Matched FAQ</th>
+                <th>Conf.</th>
+                <th>Flag</th>
+                <th>Timestamp</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${logs.map(l => `
+                <tr>
+                  <td><code>${l.id}</code></td>
+                  <td><strong>${escapeHtml(l.role)}</strong></td>
+                  <td style="max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${escapeHtml(l.text)}">${escapeHtml(l.text)}</td>
+                  <td>${l.matched_faq_id ? `<code>${escapeHtml(l.matched_faq_id)}</code>` : '-'}</td>
+                  <td>${l.confidence !== null ? Math.round(l.confidence * 100) + '%' : '-'}</td>
+                  <td>${escapeHtml(l.flag || '-')}</td>
+                  <td style="font-size: 0.72rem; color: var(--text-muted);">${new Date(l.timestamp).toLocaleTimeString()}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        `;
+        logsModalBody.innerHTML = html;
+      } catch (e) {
+        logsModalBody.innerHTML = `<div style="color: #b91c1c; padding: 1rem;">Failed to fetch logs: ${e.message}</div>`;
+      }
+    }
+
+    // Health Modal
+    const healthModal = document.getElementById('healthModal');
+    const btnHealth = document.getElementById('btnHealth');
+    const btnCloseHealth = document.getElementById('btnCloseHealth');
+    const healthModalBody = document.getElementById('healthModalBody');
+
+    btnHealth.addEventListener('click', async () => {
+      healthModal.style.display = 'flex';
+      healthModalBody.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 2rem;">Querying status...</div>';
+      try {
+        let data = null;
+        try {
+          const res = await fetch('/health');
+          if (res.ok) data = await res.json();
+        } catch (_) {}
+
+        if (!data) {
+          const staticData = window.CLINIC_STATIC_DATA;
+          data = {
+            status: window.nlpEmbedder ? "healthy (In-Browser Neural)" : "healthy (Static Client-Side)",
+            model: window.nlpEmbedder ? "all-MiniLM-L6-v2 (Transformers.js)" : "Semantic Embeddings (Precomputed)",
+            faqs_count: staticData ? staticData.faqs.length : 21,
+            embeddings_count: staticData ? staticData.variant_texts.length : 146
+          };
+        }
+
+        healthModalBody.innerHTML = `
+          <div class="health-grid">
+            <div class="health-card">
+              <span class="health-label">System Status</span>
+              <span class="health-val" style="color: #047857;">● ${escapeHtml(data.status)}</span>
+            </div>
+            <div class="health-card">
+              <span class="health-label">Semantic Model</span>
+              <span class="health-val" style="font-size: 0.95rem;">${escapeHtml(data.model)}</span>
+            </div>
+            <div class="health-card">
+              <span class="health-label">Active FAQs</span>
+              <span class="health-val">${data.faqs_count}</span>
+            </div>
+            <div class="health-card">
+              <span class="health-label">Embedded Variations</span>
+              <span class="health-val">${data.embeddings_count}</span>
+            </div>
+          </div>
+        `;
+      } catch (e) {
+        healthModalBody.innerHTML = `<div style="color: #b91c1c; padding: 1rem;">Failed to load status: ${e.message}</div>`;
+      }
+    });
+
+    btnCloseHealth.addEventListener('click', () => healthModal.style.display = 'none');
+
+    // Click outside to close modals
+    window.addEventListener('click', (e) => {
+      if (e.target === logsModal) logsModal.style.display = 'none';
+      if (e.target === healthModal) healthModal.style.display = 'none';
+    });
+  </script>
+</body>
+
+</html>

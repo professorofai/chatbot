@@ -166,10 +166,23 @@ if not STATIC_DIR.exists():
 app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 
 
+@app.get("/faq_data.js")
+async def serve_faq_data():
+    """Serve precomputed FAQ embeddings data for client-side semantic fallback."""
+    js_file = STATIC_DIR / "faq_data.js"
+    if not js_file.exists():
+        js_file = BASE_DIR / "faq_data.js"
+    if js_file.exists():
+        return FileResponse(js_file, media_type="application/javascript")
+    raise HTTPException(status_code=404, detail="faq_data.js not found")
+
+
 @app.get("/")
 async def serve_ui():
     """Serve the interactive chatbot web interface."""
     index_file = STATIC_DIR / "index.html"
+    if not index_file.exists():
+        index_file = BASE_DIR / "index.html"
     if not index_file.exists():
         return {"message": "Physiotherapy Chatbot API is running. UI file missing."}
     return FileResponse(index_file)

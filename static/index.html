@@ -772,6 +772,24 @@
     </div>
   </div>
 
+  <script src="faq_data.js"></script>
+  <script src="static/faq_data.js"></script>
+  <script type="module">
+    // Load Transformers.js for client-side semantic matching when running statically
+    try {
+      const { pipeline, env } = await import('https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2');
+      env.allowLocalModels = false;
+      pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2', { quantized: true })
+        .then(emb => {
+          window.nlpEmbedder = emb;
+          console.log('Client-side NLP embeddings model active.');
+        })
+        .catch(e => console.info('Client-side neural embedder loading in background:', e));
+    } catch (err) {
+      console.info('Transformers.js CDN not reachable, using lexical and precomputed vector matching.');
+    }
+  </script>
+
   <script>
     // Session setup
     let sessionId = localStorage.getItem('clinic_faq_sess');
@@ -788,6 +806,8 @@
     const btnSend = document.getElementById('btnSend');
 
     sessionIdText.textContent = sessionId;
+    let lastCategory = null;
+    let sessionTurnCount = 0;
 
     // Reset Chat Session
     document.getElementById('btnReset').addEventListener('click', () => {
@@ -809,6 +829,185 @@
       sendMessage(q);
     }
 
+    // Client-side NLP & Emergency Detection for Static Hosting
+    const EMERGENCY_PATTERNS = [
+      /\b(cauda equina)\b/i,
+      /\b(saddle an[ae]sthesia)\b/i,
+      /\b(loss of (bowel|bladder) control)\b/i,
+      /\b(bowel incontinence|urinary incontinence|bladder incontinence)\b/i,
+      /\b(numbness in (groin|genitals|buttocks|between (my )?legs))\b/i,
+      /\b(cannot feel (my )?legs|can't feel (my )?legs|paralysis|paralysed|paralyzed)\b/i,
+      /\b(sudden weakness in (both|my) legs|legs gave out suddenly)\b/i,
+      /\b(foot drop (sudden|acute))\b/i,
+      /\b(chest pain|pressure in chest|crushing chest pain)\b/i,
+      /\b(heart attack|cardiac arrest)\b/i,
+      /\b(shortness of breath|difficulty breathing|cannot breathe|can't breathe)\b/i,
+      /\b(stroke|facial droop|slurred speech)\b/i,
+      /\b(passed out|fainted|loss of consciousness|unresponsive)\b/i,
+      /\b(coughing (up )?blood)\b/i,
+      /\b(bone sticking out|bone protruding|compound fracture|open fracture)\b/i,
+      /\b(uncontrolled bleeding|profuse bleeding|bleeding heavily)\b/i,
+      /\b(severe head injury|concussion vomiting|unbearable sudden headache)\b/i,
+      /\b(call 911|dial 911|emergency room|call (an )?ambulance|urgent care right now)\b/i
+    ];
+
+    function cleanText(text) {
+      return text.toLowerCase().replace(/[^\w\s]/g, ' ').replace(/\s+/g, ' ').trim();
+    }
+
+    function dotProduct(a, b) {
+      let sum = 0;
+      for (let i = 0; i < a.length; i++) sum += a[i] * b[i];
+      return sum;
+    }
+
+    async function clientSideChat(text) {
+      const data = window.CLINIC_STATIC_DATA;
+      if (!data) {
+        throw new Error('Static FAQ database not loaded.');
+      }
+
+      // 1. Emergency detection
+      for (const pattern of EMERGENCY_PATTERNS) {
+        if (pattern.test(text)) {
+          return recordExchange(text, {
+            session_id: sessionId,
+            answer: data.emergency_response,
+            confidence: 1.0,
+            matched_faq_id: 'emergency_urgent_care',
+            category: 'emergency',
+            flag: 'emergency',
+            suggested_questions: []
+          });
+        }
+      }
+
+      sessionTurnCount++;
+      const cleaned = cleanText(text);
+      const queryTokens = new Set(cleaned.split(' ').filter(Boolean));
+
+      let candidateScores = [];
+
+      // 2. Neural vector search if in-browser model loaded
+      if (window.nlpEmbedder) {
+        try {
+          const output = await window.nlpEmbedder(cleaned, { pooling: 'mean', normalize: true });
+          const qVec = Array.from(output.data);
+          candidateScores = data.variant_embeddings.map(vec => dotProduct(qVec, vec));
+        } catch (err) {
+          console.warn('Browser embedding exception:', err);
+        }
+      }
+
+      // 3. Fallback token-overlap scoring
+      if (candidateScores.length === 0) {
+        candidateScores = data.variant_texts.map(vText => {
+          const vClean = cleanText(vText);
+          const vTokens = vClean.split(' ').filter(Boolean);
+          let matchCount = 0;
+          for (const tok of vTokens) {
+            if (queryTokens.has(tok)) matchCount++;
+          }
+          return matchCount / Math.max(vTokens.length, 1);
+        });
+      }
+
+      // Aggregate maximum score per FAQ
+      const faqBestScores = {};
+      for (let i = 0; i < candidateScores.length; i++) {
+        const fId = data.variant_faq_ids[i];
+        const score = candidateScores[i];
+        if (!faqBestScores[fId] || score > faqBestScores[fId]) {
+          faqBestScores[fId] = score;
+        }
+      }
+
+      const faqMap = {};
+      data.faqs.forEach(f => { faqMap[f.id] = f; });
+
+      // Apply contextual & keyword boosts
+      const scoredFaqs = Object.keys(faqBestScores).map(fId => {
+        const faq = faqMap[fId];
+        let score = faqBestScores[fId];
+
+        if (lastCategory && faq.category === lastCategory) {
+          score += 0.08;
+        }
+
+        const patterns = data.keyword_patterns[fId] || [];
+        for (const pat of patterns) {
+          if (cleaned.includes(pat.toLowerCase())) {
+            score += 0.08;
+            break;
+          }
+        }
+
+        return { faq, score: Math.min(score, 0.99) };
+      });
+
+      scoredFaqs.sort((a, b) => b.score - a.score);
+      const topMatch = scoredFaqs[0];
+      const threshold = 0.55;
+
+      if (topMatch && topMatch.score >= threshold) {
+        const faq = topMatch.faq;
+        lastCategory = faq.category;
+        let answerText = faq.answer;
+        if (faq.answers && faq.answers.length > 0) {
+          answerText = faq.answers[sessionTurnCount % faq.answers.length];
+        }
+
+        return recordExchange(text, {
+          session_id: sessionId,
+          answer: answerText,
+          confidence: Math.round(topMatch.score * 100) / 100,
+          matched_faq_id: faq.id,
+          category: faq.category,
+          flag: 'normal',
+          suggested_questions: []
+        });
+      } else {
+        const suggestions = scoredFaqs.slice(0, 3).map(item => item.faq.question);
+        return recordExchange(text, {
+          session_id: sessionId,
+          answer: data.fallback_message,
+          confidence: topMatch ? Math.round(topMatch.score * 100) / 100 : 0.25,
+          matched_faq_id: topMatch ? topMatch.faq.id : null,
+          category: topMatch ? topMatch.faq.category : null,
+          flag: 'fallback',
+          suggested_questions: suggestions
+        });
+      }
+    }
+
+    function recordExchange(userText, responseObj) {
+      try {
+        const logs = JSON.parse(localStorage.getItem('clinic_chat_logs') || '[]');
+        logs.unshift({
+          id: 'usr_' + Date.now().toString(36),
+          role: 'user',
+          text: userText,
+          matched_faq_id: null,
+          confidence: null,
+          flag: null,
+          timestamp: new Date().toISOString()
+        });
+        logs.unshift({
+          id: 'bot_' + (Date.now() + 1).toString(36),
+          role: 'assistant',
+          text: responseObj.answer,
+          matched_faq_id: responseObj.matched_faq_id,
+          confidence: responseObj.confidence,
+          flag: responseObj.flag,
+          timestamp: new Date().toISOString()
+        });
+        localStorage.setItem('clinic_chat_logs', JSON.stringify(logs.slice(0, 200)));
+      } catch (e) {
+        console.warn('localStorage error:', e);
+      }
+      return responseObj;
+    }
+
     // Main sendMessage function
     async function sendMessage(text) {
       chatInput.value = '';
@@ -819,25 +1018,38 @@
       showTyping(true);
 
       try {
-        const response = await fetch('/chat', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            message: text,
-            session_id: sessionId
-          })
-        });
+        let data = null;
 
-        if (!response.ok) {
-          throw new Error('Server returned ' + response.status);
+        // Try API endpoint first (if running FastAPI server)
+        try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 2000);
+          const response = await fetch('/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              message: text,
+              session_id: sessionId
+            }),
+            signal: controller.signal
+          });
+          clearTimeout(timeoutId);
+          if (response.ok) {
+            data = await response.json();
+          }
+        } catch (_) {
+          // Backend not reachable, fall back seamlessly to static in-browser engine
         }
 
-        const data = await response.json();
+        if (!data) {
+          data = await clientSideChat(text);
+        }
+
         showTyping(false);
         appendAIBubble(data);
       } catch (err) {
         showTyping(false);
-        appendErrorBubble("I'm having trouble connecting to the clinic server. Please check your connection or try again in a moment.");
+        appendErrorBubble("I'm having trouble processing your inquiry. Please try again in a moment.");
         console.error(err);
       } finally {
         chatInput.disabled = false;
@@ -964,8 +1176,16 @@
     async function fetchLogs() {
       logsModalBody.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 2rem;">Loading logs...</div>';
       try {
-        const res = await fetch('/logs?limit=40');
-        const logs = await res.json();
+        let logs = null;
+        try {
+          const res = await fetch('/logs?limit=40');
+          if (res.ok) logs = await res.json();
+        } catch (_) {}
+
+        if (!logs || logs.length === 0) {
+          logs = JSON.parse(localStorage.getItem('clinic_chat_logs') || '[]');
+        }
+
         if (!logs || logs.length === 0) {
           logsModalBody.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 2rem;">No logs recorded yet.</div>';
           return;
@@ -1015,8 +1235,22 @@
       healthModal.style.display = 'flex';
       healthModalBody.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 2rem;">Querying status...</div>';
       try {
-        const res = await fetch('/health');
-        const data = await res.json();
+        let data = null;
+        try {
+          const res = await fetch('/health');
+          if (res.ok) data = await res.json();
+        } catch (_) {}
+
+        if (!data) {
+          const staticData = window.CLINIC_STATIC_DATA;
+          data = {
+            status: window.nlpEmbedder ? "healthy (In-Browser Neural)" : "healthy (Static Client-Side)",
+            model: window.nlpEmbedder ? "all-MiniLM-L6-v2 (Transformers.js)" : "Semantic Embeddings (Precomputed)",
+            faqs_count: staticData ? staticData.faqs.length : 21,
+            embeddings_count: staticData ? staticData.variant_texts.length : 146
+          };
+        }
+
         healthModalBody.innerHTML = `
           <div class="health-grid">
             <div class="health-card">

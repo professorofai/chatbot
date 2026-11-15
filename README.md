@@ -1,6 +1,15 @@
+---
+title: Physiotherapy Clinic Chatbot
+emoji: 🏥
+colorFrom: blue
+colorTo: green
+sdk: static
+pinned: false
+---
+
 # Physiotherapy Clinic Chatbot
 
-A semantic FAQ chatbot and API for physiotherapy clinics built with FastAPI, Sentence Transformers, NLTK, and SQLite.
+A semantic FAQ chatbot and API for physiotherapy clinics built with FastAPI, Sentence Transformers, NLTK, and SQLite, plus client-side in-browser semantic execution for free static hosting (Hugging Face Spaces, GitHub Pages, Netlify, Vercel).
 
 ## Features
 
